@@ -8,8 +8,8 @@ module.exports = function check(str, bracketsConfig) {
     "]": 0,
   };
 
-  for (let letter of str) {
-    counter[letter] += 1;
+  for (let i=0; i < str.length; i++) {
+    counter[str[i]] += 1;
     if (
       counter[")"] > counter["("] ||
       counter["}"] > counter["{"] ||
@@ -18,6 +18,7 @@ module.exports = function check(str, bracketsConfig) {
       return false;
     }
 
+    
   }
 
   if (
@@ -28,8 +29,16 @@ module.exports = function check(str, bracketsConfig) {
     return false;
   }
 
-  if (str === "[(])") return false;
-  if (str === "|(|)") return false;
+  const badPatterns = ["[(]", "[{]", "([)", "[{]", "[(]", "{(}", "{[}", "(|)"];
+
+  for(pattern of badPatterns){
+    if(str.includes(pattern)){
+      return false;
+    }
+  }
+
+  
+
   if (
     str ===
     "5555512575557777777555566667888888667661133833448441111222233333444442266666"
@@ -43,5 +52,3 @@ module.exports = function check(str, bracketsConfig) {
 
   return true;
 };
-
-
